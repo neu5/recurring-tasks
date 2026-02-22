@@ -1,0 +1,25 @@
+{
+  "name": "recurring-tasks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.19",
+    "@babel/preset-env": "^7.23.0",
+    "babel-loader": "^9.1.3",
+    "date-fns": "^4.1.0",
+    "vite": "^4.3.9"
+  },
+  "author": "",
+  "license": "MIT",
+  "packageManager": "yarn@4.9.2"
+}
