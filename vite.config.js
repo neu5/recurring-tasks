@@ -1,4 +1,5 @@
 import { defineConfig } from "vite";
+import path from "path";
 
 export default defineConfig({
   root: "src", // Set the root to the src directory
@@ -11,4 +12,5 @@ export default defineConfig({
       input: "src/index.html", // Entry point for the build
     },
   },
+  publicDir: path.resolve(__dirname, "data"),
 });

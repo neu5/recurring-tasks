@@ -13,7 +13,8 @@ const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, "dist")));
 
 // Serve static files from the 'public' directory
-app.use("/logData", express.static(path.join(__dirname, "public/logData")));
+// app.use("/data", express.static(path.join(__dirname, "data")));
+app.use(express.static(path.join(__dirname, "data")));
 
 // Fallback to index.html for SPA routing
 app.get("*", (req, res) => {

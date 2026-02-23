@@ -1,55 +1,45 @@
 import { differenceInDays } from "date-fns";
 import "./styles.css";
 
-// const result = differenceInDays(
-//   new Date(2020, 5, 1),
-//   new Date(2020, 2, 1)
-// )
-const result = differenceInDays(Date.now(), new Date("2026-02-15"));
+async function fetchData() {
+  const response = await fetch(`data.json`);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch data`);
+  }
+  const data = await response.json();
+  return data;
+}
 
-console.log(result);
+async function init() {
+  const data = await fetchData();
 
-// Function to fetch log data from a JSON file
-// async function fetchLogData(fileName) {
-//   const response = await fetch(`/logData/${fileName}`);
-//   if (!response.ok) {
-//     throw new Error(`Failed to fetch ${fileName}`);
-//   }
-//   const data = await response.json();
-//   return data;
-// }
+  const list = document.getElementById("list");
+  list.textContent = "";
+  const fragment = new DocumentFragment();
 
-// Function to initialize charts
-// async function initCharts() {
-//   const logFiles = [
-//     "logData1.json",
-//     "logData2.json",
-//     "logData3.json",
-//     "logData4.json",
-//     "logData5.json",
-//     "logData6.json",
-//     "logData7.json",
-//     "logData8.json",
-//     "logData9.json",
-//     "logData10.json",
-//   ];
+  const now = Date.now();
 
-//   const container = document.querySelector(".container");
+  for (const item of data) {
+    const duration = differenceInDays(now, new Date(item.lastUpdatedDate));
 
-//   for (const fileName of logFiles) {
-//     const logData = await fetchLogData(fileName);
+    const li = document.createElement("li");
+    const span = document.createElement("span");
+    li.textContent = `${item.name}, `;
+    span.textContent = `minęło ${duration} (z ${item.durationInDays}) dni`;
 
-//     // Create a new canvas element for each chart
-//     const canvas = document.createElement("canvas");
-//     canvas.classList.add("chart-canvas"); // Add a class for easier CSS targeting
-//     canvas.id = `chart-${fileName}`;
-//     canvas.width = 250; // Set fixed width for better layout
-//     canvas.height = 250; // Set fixed height for better layout
-//     container.appendChild(canvas);
+    li.appendChild(span);
+    if (duration < item.durationInDays - 7) {
+      span.classList.add("green");
+    } else if (duration < item.durationInDays) {
+      span.classList.add("yellow");
+    } else {
+      span.classList.add("red");
+    }
 
-//     createChart(canvas.id, logData);
-//   }
-// }
+    fragment.append(li);
+  }
 
-// Call the function to initialize charts
-// initCharts();
+  list.append(fragment);
+}
+
+init();
