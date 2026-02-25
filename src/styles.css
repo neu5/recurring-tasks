@@ -26,10 +26,6 @@ li span {
   padding: 5px;
 }
 
-li .green {
-  background-color: palegreen;
-}
-
 li .yellow {
   background-color: rgb(251, 221, 152);
 }

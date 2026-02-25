@@ -28,12 +28,11 @@ async function init() {
     span.textContent = `minęło ${duration} (z ${item.durationInDays}) dni`;
 
     li.appendChild(span);
-    if (duration < item.durationInDays - 7) {
-      span.classList.add("green");
-    } else if (duration < item.durationInDays) {
-      span.classList.add("yellow");
-    } else {
+    console.log({ duration });
+    if (duration >= item.durationInDays) {
       span.classList.add("red");
+    } else if (item.durationInDays - duration < 7) {
+      span.classList.add("yellow");
     }
 
     fragment.append(li);
