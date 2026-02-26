@@ -13,11 +13,14 @@ async function fetchData() {
 async function init() {
   const data = await fetchData();
 
-  const list = document.getElementById("list");
-  list.textContent = "";
+  const listEl = document.getElementById("list");
+  listEl.textContent = "";
   const fragment = new DocumentFragment();
 
   const now = Date.now();
+
+  const expiredList = [];
+  const list = [];
 
   for (const item of data) {
     const duration = differenceInDays(now, new Date(item.lastUpdatedDate));
@@ -28,17 +31,22 @@ async function init() {
     span.textContent = `minęło ${duration} (z ${item.durationInDays}) dni`;
 
     li.appendChild(span);
-    console.log({ duration });
+
     if (duration >= item.durationInDays) {
       span.classList.add("red");
+      expiredList.push(li);
     } else if (item.durationInDays - duration < 7) {
       span.classList.add("yellow");
+      list.push(li);
+    } else {
+      list.push(li);
     }
-
-    fragment.append(li);
   }
 
-  list.append(fragment);
+  expiredList.forEach((item) => fragment.append(item));
+  list.forEach((item) => fragment.append(item));
+
+  listEl.append(fragment);
 }
 
 init();
