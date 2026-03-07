@@ -27,7 +27,7 @@ async function init() {
 
     const li = document.createElement("li");
     const span = document.createElement("span");
-    li.textContent = `${item.name}, `;
+    li.textContent = `${item.name},`;
     span.textContent = `minęło ${duration} (z ${item.durationInDays}) dni`;
 
     li.appendChild(span);
